@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# text colors
+TEXT_RESET='\e[0m'
+TEXT_YELLOW='\e[0;33m'
+TEXT_RED='\e[0;31m'
+TEXT_GREEN='\e[0;32m'
+TEXT_WHITE_B='\e[1m'
+
+update() {
+	echo -e $TEXT_WHITE_B
+	echo "# update pacman packages"
+	echo -e $TEXT_RESET
+	aura -Syu --noconfirm
+
+	echo -e $TEXT_WHITE_B
+	echo "# update aur packages"
+	echo -e $TEXT_RESET
+	aura -Axkua --noconfirm
+}
+
+housekeeping() {
+	echo -e $TEXT_WHITE_B
+	echo "# delete orphans and their cached versions"
+	echo -e $TEXT_RESET
+	pacman -Rns $(pacman -Qtdq) --noconfirm
+	paccache -ruk0
+
+	echo -e $TEXT_WHITE_B
+	echo "# clear pacman cache to 1 previouse version"
+	echo -e $TEXT_RESET
+	paccache -rk1
+
+	echo -e $TEXT_WHITE_B
+	echo "# updatedb"
+	echo -e $TEXT_RESET
+	sudo updatedb;
+}
+
+leave() {
+	echo -e $TEXT_WHITE_B
+	echo "# Update Complete!"
+	echo -e $TEXT_RESET
+	exit
+}
+
+update
+housekeeping
+leave

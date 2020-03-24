@@ -1,2 +1,2 @@
 # archUpdateScript
-updateSkript for archlinux with AUR-helper aura
+updateSkript for archlinux with AUR-helper `aura`

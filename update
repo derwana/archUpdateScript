@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "# update system"
+aura -Syu
+
+echo "# update aur"
+aura -Axkua
+
+echo "# delete orphans and their cached versions"
+pacman -Rns $(pacman -Qtdq)
+paccache -ruk0
+
+echo "# clear pacman cache to 1 previouse version"
+paccache -rk1
+
+exit
